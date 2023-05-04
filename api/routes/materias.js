@@ -6,7 +6,7 @@ router.get("/", (req, res) => {
   console.log("Esto es un mensaje para ver en consola");
   models.materia
     .findAll({
-      attributes: ["id", "nombre", "id_carrera"]
+      attributes: ["id", "nombre", "duracion"]
     })
     .then(materias => res.send(materias))
     .catch(() => res.sendStatus(500));
@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
 
 router.post("/", (req, res) => {
   models.materia
-    .create({ nombre: req.body.nombre, id_carrera: req.body.id_carrera  })
+    .create({ nombre: req.body.nombre, id_carrera: req.body.id_carrera })
     .then(materias => res.status(201).send({ id: materias.id }))
     .catch(error => {
       if (error == "SequelizeUniqueConstraintError: Validation error") {
@@ -30,7 +30,7 @@ router.post("/", (req, res) => {
 const findMateria = (id, { onSuccess, onNotFound, onError }) => {
   models.materia
     .findOne({
-      attributes: ["id", "nombre", "id_carrera"],
+      attributes: ["id", "nombre", "duracion"],
       where: { id }
     })
     .then(materias => (materias ? onSuccess(materias) : onNotFound()))
