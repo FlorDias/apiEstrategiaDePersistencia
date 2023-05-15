@@ -6,7 +6,7 @@
 - [Express js](https://expressjs.com/es/)
 - [Sequelize ORM](https://sequelize.org/docs/v6/)
 
-## En esta primera entrega, generamos la entidad Materias, con su respectiva migración y configuración de ruta en Express.
+<!-- ## En esta primera entrega, generamos la entidad Materias, con su respectiva migración y configuración de ruta en Express.
 
 
 
@@ -28,4 +28,7 @@
 
 
 -  ### Prueba para eliminar una materia según su ID, utilizando el método DELETE.
-![Imagen Thunder Client - DELETE](https://drive.google.com/uc?id=1Znm5Pt6_ynNNsXBqGbWi87p3HXKKbvx2)
+![Imagen Thunder Client - DELETE](https://drive.google.com/uc?id=1Znm5Pt6_ynNNsXBqGbWi87p3HXKKbvx2) -->
+
+
+## En esta segunda entrega, generamos las entidades alumno, profesor y creamos las relaciones correspondientes con las entidades ya existentes.
