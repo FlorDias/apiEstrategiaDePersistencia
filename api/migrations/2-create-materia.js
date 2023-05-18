@@ -10,20 +10,7 @@ module.exports = {
       },
       nombre: {
         type: Sequelize.STRING,
-      },
-      duracion: {
-        type: Sequelize.INTEGER,
-      },
-      carreraId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: "carrera",
-          key: "id",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-      },
+      },      
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -11,7 +11,7 @@ module.exports = {
       nombre: {
         type: Sequelize.STRING
       },
-      dni: {
+      matricula: {
         type: Sequelize.INTEGER
       },
       createdAt: {
