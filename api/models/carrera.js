@@ -4,9 +4,11 @@ module.exports = (sequelize, DataTypes) => {
     "carrera",
     {
       nombre: DataTypes.STRING,
-    },
-    {}
-  );
-
+    });
+  carrera.associate = (models) => {
+    carrera.hasMany(models.materia, {
+      foreignKey: 'carrera_id'
+    });
+  };
   return carrera;
 };

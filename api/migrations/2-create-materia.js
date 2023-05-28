@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("materia", {
+  up: (queryInterface, Sequelize) => {
+    return queryInterface.createTable("materia", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,7 +10,17 @@ module.exports = {
       },
       nombre: {
         type: Sequelize.STRING,
-      },      
+      },
+      carrera_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: "carreras",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -21,7 +31,7 @@ module.exports = {
       },
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("materia");
+  down: (queryInterface, Sequelize) => {
+    return queryInterface.dropTable("materia");
   },
 };
