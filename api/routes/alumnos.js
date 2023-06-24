@@ -14,9 +14,14 @@ const findAlumno = (id, { onSuccess, onNotFound, onError }) => {
 
 // Obtener todos los alumnos
 router.get("/", (req, res) => {
+  const cantidadAVer = parseInt(req.query.cantidadAVer);
+  const paginaActual = parseInt(req.query.paginaActual);
   models.alumno
-    .findAll({
+    .findAndCountAll({
       attributes: ["id", "nombre", "matricula", "usuario_id", "carrera_id"],
+      order: [["id", "ASC"]],
+      offset: (paginaActual-1) * cantidadAVer, 
+      limit: cantidadAVer
     })
     .then((alumnos) => res.send(alumnos))
     .catch(() => res.sendStatus(500));
