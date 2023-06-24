@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
   const cantidadAVer = parseInt(req.query.cantidadAVer);
   const paginaActual = parseInt(req.query.paginaActual);
   models.alumno
-    .findAndCountAll({
+    .findAll({
       attributes: ["id", "nombre", "matricula", "usuario_id", "carrera_id"],
       order: [["id", "ASC"]],
       offset: (paginaActual-1) * cantidadAVer, 

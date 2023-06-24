@@ -10,6 +10,7 @@ var materiasRouter = require('./routes/materias');
 var alumnosRouter = require('./routes/alumnos');
 var profesorRouter = require('./routes/profesores');
 var usuariosRouter = require('./routes/usuarios');
+var login = require('./index');
 
 var app = express();
 // view engine setup
@@ -22,7 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+app.use('/login', login);
 app.use('/car', carrerasRouter);
 app.use('/mat', materiasRouter);
 app.use('/alu', alumnosRouter);
