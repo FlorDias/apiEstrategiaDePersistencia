@@ -1,0 +1,85 @@
+body {
+  
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.content-principal {
+  height: 100vh;
+  background: linear-gradient(180deg, rgba(66, 169, 203, 0.2) 0%, #4dae30 100%);
+}
+form {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+  width: 567px;
+  height: 707px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.contenedor {
+  margin-top: 50px;
+}
+.svg {
+  margin: -120px auto 20px auto;
+ text-align: center;
+}
+input {
+  margin: 0 auto 0 auto;
+  width: 334.816px;
+  height: 40.4px;
+  flex-shrink: 0;
+  border-radius: 8px;
+}
+label {
+  margin: 32px auto 0 auto;
+}
+select {
+  margin: 0 auto 0 auto;
+  width: 334.816px;
+  height: 40.4px;
+  flex-shrink: 0;
+  border-radius: 8px;
+}
+button{
+ width: 85px;
+height: 40.4px;
+flex-shrink: 0;
+border-radius: 8px;
+}
+.btn-registro {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+
+.btn-login{
+  background-color: #4DAE30;
+}
+.btn-register{
+  background-color: #42A9CB;
+}
+.btn-crear{
+  background-color: #4DAE30;
+}
+
+.btn-cancelar{
+  
+  background-color: #be3a3a;
+}
+.input-login{
+  margin-top: 32px;
+}
