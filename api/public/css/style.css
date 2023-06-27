@@ -1,5 +1,4 @@
 body {
-  
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -32,7 +31,7 @@ form {
 }
 .svg {
   margin: -120px auto 20px auto;
- text-align: center;
+  text-align: center;
 }
 input {
   margin: 0 auto 0 auto;
@@ -51,11 +50,11 @@ select {
   flex-shrink: 0;
   border-radius: 8px;
 }
-button{
- width: 85px;
-height: 40.4px;
-flex-shrink: 0;
-border-radius: 8px;
+button {
+  width: 85px;
+  height: 40.4px;
+  flex-shrink: 0;
+  border-radius: 8px;
 }
 .btn-registro {
   margin-top: 32px;
@@ -65,21 +64,35 @@ border-radius: 8px;
   align-items: center;
 }
 
+.btn-login {
+  background-color: #4dae30;
+}
+.btn-register {
+  background-color: #42a9cb;
+}
+.btn-crear {
+  background-color: #4dae30;
+}
 
-.btn-login{
-  background-color: #4DAE30;
+.btn-cancelar {
+  background-color: #e96969;
 }
-.btn-register{
-  background-color: #42A9CB;
-}
-.btn-crear{
-  background-color: #4DAE30;
-}
-
-.btn-cancelar{
-  
-  background-color: #be3a3a;
-}
-.input-login{
+.input-login {
   margin-top: 32px;
+}
+.div-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.div-login button{
+  margin-top: 32px;
+  width: 342.81px;
+}
+
+.error {
+  display: flex;
+  flex-direction: column;
+  /* align-content: center; */
+  align-items: center;
 }

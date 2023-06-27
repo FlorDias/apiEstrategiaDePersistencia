@@ -1,4 +1,4 @@
-const selectCarrera = document.getElementById("carrera");
+const selectCarrera = document.getElementById("carrera_id");
 
 fetch("http://localhost:3001/car")
   .then((response) => {
@@ -9,7 +9,6 @@ fetch("http://localhost:3001/car")
     }
   })
   .then((data) => {
-
     for (let i = 0; i < data.rows.length; i++) {
       const option = document.createElement("option");
       option.value = data.rows[i].id;

@@ -1,7 +1,7 @@
 var express = require("express");
-const router = express.Router()
-const dotenv = require('dotenv');
-const jwt = require('jsonwebtoken');
+var router = express.Router()
+var dotenv = require('dotenv');
+var jwt = require('jsonwebtoken');
 
 
 dotenv.config();
@@ -48,7 +48,7 @@ router.get("/validateToken", (req, res) => {
             return res.send("Successfully Verified");
         }else{
             // Access Denied
-            return res.status(401).send(error);
+            return res.status(401).send(Error);
         }
     } catch (error) {
         // Access Denied

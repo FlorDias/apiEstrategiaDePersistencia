@@ -13,10 +13,9 @@ router.get('/register',(_req,res)=>{
     res.render('register',)
 })
 
-
-
 router.get('/perfil',(_req,res)=>{
     res.render('perfil')
 })
 
+router.post('/login',authController.login)
 module.exports = router;

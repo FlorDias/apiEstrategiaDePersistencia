@@ -55,7 +55,8 @@ exports.obtenerPorId = (req, res) => {
   }
 
   exports.crearAlumno = async (req, res) => {
-    const { nombre, matricula, usuario_id, carrera_id } = req.params;
+    const { nombre, matricula, usuario_id, carrera_id } = req.body;
+    console.log(nombre,matricula,usuario_id,carrera_id);
     models.alumno
       .create({
         nombre: nombre,
