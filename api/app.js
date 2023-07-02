@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var { cacheInit } = require('./middleware/cache');
 // Sincronización de modelos
 
 var carrerasRouter = require('./routes/carreras');
@@ -13,6 +14,21 @@ var usuariosRouter = require('./routes/usuarios');
 
 
 var app = express();
+
+// cache en peticiones
+
+// la llamada inicial a esto tomará 2 segundos, pero cualquier llamada posterior
+// recibirá una respuesta instantánea del caché durante la próxima hora
+// este get puede ir como no ir
+app.get('/', cacheInit.withTtl('1 hour'), (req, res) => { // agregar ruta o ponerlo en routes
+  setTimeout(() => {
+    res.end('pong');
+  }, 2000);
+});
+
+// Guarda en caché todo lo que está debajo de esta línea durante 1 minuto (defaultTtl)
+app.use(cacheInit);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
