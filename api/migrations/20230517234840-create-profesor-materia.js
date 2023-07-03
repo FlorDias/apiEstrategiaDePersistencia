@@ -8,6 +8,26 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      profesor_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'profesors',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      materia_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'materia',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -3,9 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="resources/img/unahur.ico">
     <title>Inicio</title>
+    <link rel="stylesheet" href="resources/css/style.css" />
 </head>
-<body>
-    <h1>Inicio</h1>
+<body class="content-principal">
+    <header>
+        <nav>
+            <div>
+                <img src="resources/img/logo.svg" alt="logo unahur" />
+            </div>
+            <button onclick="logout()">Logout</button>
+        </nav>
+    </header>
+    <h1 class="h1-inicio">Datos del Alumno</h1>
+
+    <div class="contenedor-inicio">
+        <div class="tabla">
+            <div class="fila">
+              <div class="celda impar">Usuario:</div>
+              <div class="celda par"><%=alumno.user%></div>
+           
+            </div>
+            <div class="fila">
+              <div class="celda impar">Nombre:</div>
+              <div class="celda par"><%=alumno.nombre%></div>
+             
+            </div>
+            <div class="fila">
+              <div class="celda impar">Matricula</div>
+              <div class="celda par"><%=alumno.matricula%></div>
+            </div>
+            <div class="fila">
+              <div class="celda impar">Carrera</div>
+              <div class="celda par"><%=alumno.carrera_id%></div>
+            </div>
+          </div>
+<div>
+    <h2>Materias Inscripto</h2>
+    <%=alumno%>
+</div>          
+<div class="inscribirse-inicio">
+    <h2>Inscribirse a Materias</h2>
+    <button>Aceptar</button>
+</div>
+    </div>
+    <script src="resources/js/main.js"></script>
 </body>
 </html>

@@ -10,23 +10,15 @@ module.exports = {
       },
       nombre: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       matricula: {
         type: Sequelize.INTEGER,
-      },
-      usuario_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: {
-          model: "usuarios",
-          key: "id",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
+        allowNull: false,
       },
       carrera_id: {
         type: Sequelize.INTEGER,
-        allowNull: true,
+        allowNull: false,
         references: {
           model: "carreras",
           key: "id",
@@ -34,6 +26,17 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
+      usuario_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "usuarios",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

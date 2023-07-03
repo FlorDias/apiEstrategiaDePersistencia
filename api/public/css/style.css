@@ -85,7 +85,7 @@ button {
   flex-direction: column;
   align-items: center;
 }
-.div-login button{
+.div-login button {
   margin-top: 32px;
   width: 342.81px;
 }
@@ -95,4 +95,78 @@ button {
   flex-direction: column;
   /* align-content: center; */
   align-items: center;
+}
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 65px;
+}
+
+nav div img {
+  width: 65px;
+}
+
+.h1-inicio {
+  text-align: center;
+}
+
+.contenedor-inicio {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 567px;
+  height: 707px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.tabla {
+  margin-top: 12px;
+  display: table;
+  width: auto;
+  border-collapse: collapse;
+}
+
+.fila {
+  display: table-row;
+}
+
+.celda {
+  display: table-cell;
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+}
+.par {
+  text-align: left;
+}
+div h2 {
+  text-align: center;
+}
+.inscribirse-inicio {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+.inscribirse-inicio button:hover{
+background-color: #4dae30;
+color: white;
+}
+nav button {
+  background-color: #e96969;
+  color: #fff;
+  
+}
+.impar {
+  font-size: large;
+  font-weight: bold;
+}
+button{
+  cursor: pointer;
 }

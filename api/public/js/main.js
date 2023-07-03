@@ -19,3 +19,10 @@ fetch("http://localhost:3001/car")
   .catch((error) => {
     console.error(error);
   });
+
+const logout = () => {
+  fetch("http://localhost:3001/logout", { method: "POST" }).then((data) => {
+    window.location.href = "/login";
+    console.log(data);
+  });
+};

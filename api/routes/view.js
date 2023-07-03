@@ -1,9 +1,9 @@
 var express = require('express');
 var router= express.Router();
 var authController = require('../controller/authController')
+var verifyToken = require('../middleware/verify');
 
-
-router.get('/',(_req,res)=>{
+router.get('/',verifyToken,(_req,res)=>{
     res.render('index',)
 })
 router.get('/login',(_req,res)=>{
@@ -18,4 +18,6 @@ router.get('/perfil',(_req,res)=>{
 })
 
 router.post('/login',authController.login)
+router.post('/logout',authController.logout)
+
 module.exports = router;

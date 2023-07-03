@@ -3,31 +3,47 @@ var bcrypt = require("bcryptjs");
 var models = require("../models");
 var { promisify } = require("util");
 var models = require("../models");
-require("dotenv").config();
 
 exports.login = async (req, res) => {
   const { user, pass } = req.body;
-  // validar credenciales con base de datos
- await models.userio
-    .findOne({
+  console.log(user, "login", pass);
+
+  try {
+    const usuario = await models.usuario.findOne({
       where: { username: user },
-    })
-    .then((user) => {
-      if (!user) {
-        res.setatus(404).json({ msg: "User not found" });
-      } else {
-        if (bcrypt.compareSync(pass, models.usuario.password)) {
-          //creamos el token
-          let token = jwt.sign({ user: user }, process.env.JWT_SECRET_KEY, {
-            expiresIn: process.env.JWT_TIEMPO_EXPIRA,
-          });
+    });
 
-          res.json({user: user, token: token});
+    if (!usuario) {
+      return res.status(404).json({ msg: "User not found" });
+    }
 
-        } else {
-          res.status(401).json({ message: "Contraseña incorrecta" });
-        }
-      }
-    })
-    .catch((err) => console.log(err));
+    if (bcrypt.compareSync(pass, usuario.password)) {
+   
+      const token = jwt.sign({ user: usuario }, process.env.JWT_SECRET_KEY, {
+        expiresIn: process.env.JWT_TIEMPO_EXPIRA,
+      });
+
+      const cookiesOptions = {
+        expires: new Date(
+          Date.now() +
+            Number(process.env.JWT_COOKIE_EXPIRES) * 24 * 60 * 60 * 1000
+        ),
+        httpOnly: true,
+      };
+      res.header("Authorization", `Bearer ${token}`);
+      res.cookie("jwt", token, cookiesOptions);
+
+      res.status(200).redirect("http://localhost:3001/");
+    } else {
+      res.status(401).json({ message: "Incorrect password" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "An error occurred" });
+  }
+};
+
+exports.logout = (req, res) => {
+  res.clearCookie("jwt");
+  return res.redirect("/login");
 };

@@ -10,10 +10,11 @@ module.exports = {
       },
       nombre: {
         type: Sequelize.STRING,
+        allowNull: false
       },
       carrera_id: {
         type: Sequelize.INTEGER,
-        allowNull: true,
+        allowNull: false,
         references: {
           model: "carreras",
           key: "id",

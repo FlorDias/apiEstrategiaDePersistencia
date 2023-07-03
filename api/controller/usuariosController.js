@@ -2,7 +2,7 @@ var models = require("../models");
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 var { promisify } = require("util");
-require('dotenv').config(); 
+require("dotenv").config();
 
 const findUsuario = (id, { onSuccess, onNotFound, onError }) => {
   models.usuario
@@ -12,12 +12,6 @@ const findUsuario = (id, { onSuccess, onNotFound, onError }) => {
     })
     .then((usuario) => (usuario ? onSuccess(usuario) : onNotFound()))
     .catch(() => onError());
-};
-
-const alphanumeric = /^[a-zA-Z0-9]{8,}$/;
-
-const validarAlphan = (pass) => {
-  !alphanumeric.test(pass) ? false : true;
 };
 
 exports.obtenerUsuarios = (req, res) => {
@@ -47,14 +41,33 @@ exports.crearUsuario = async (req, res) => {
         username: user,
         password: passHash,
       })
-      .then((usuario) =>{ 
+      .then((usuario) => {
         // CREAMOS EL TOKEN
-        let token = jwt.sign({user: user}, process.env.JWT_SECRET_KEY,{
-          expiresIn: process.env.JWT_TIEMPO_EXPIRA
-        })
-        
-        res.status(201).json({user:user, token:token})})
-        //render("perfil", { usuario: JSON.stringify(usuario.id), user: JSON.stringify(user), token: JSON.stringify(token)})})
+        let token = jwt.sign(
+          { id: usuario.id, user: user },
+          process.env.JWT_SECRET_KEY,
+          {
+            expiresIn: process.env.JWT_TIEMPO_EXPIRA,
+          }
+        );
+        console.log(token);
+        const cookiesOptions = {
+          expires: new Date(
+            Date.now() +
+              Number(process.env.JWT_COOKIE_EXPIRES) * 24 * 60 * 60 * 1000
+          ),
+          httpOnly: true,
+        };
+        res.cookie("jwt", token, cookiesOptions);
+        res.header("Authorization", `Bearer ${token}`);
+        res
+          .status(201)
+          .render("perfil", {
+            usuario: JSON.stringify(usuario.id),
+            user: JSON.stringify(user),
+            token: JSON.stringify(token),
+          });
+      })
       .catch((error) => {
         if (error == "SequelizeUniqueConstraintError: Validation error") {
           res

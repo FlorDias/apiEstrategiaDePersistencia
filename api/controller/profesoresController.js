@@ -11,7 +11,6 @@ const findProfesor = (id, { onSuccess, onNotFound, onError }) => {
 };
 
 exports.obtenerProfesores = (req, res) => {
-  console.log("ENTRE A GET")
     models.profesor
       .findAll({
         attributes: ["id", "nombre"],

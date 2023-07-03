@@ -3,11 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="resources/img/unahur.ico">
     <title>Register</title>
     <link rel="stylesheet" href="resources/css/style.css" />
   </head>
   <body class="content-principal">
     <div class="contenedor">
+
+      
       <form method="POST" action="alu">
         <div class="svg">
           <img src="resources/img/logo.svg" alt="logo unahur" />
@@ -15,16 +18,8 @@
 
         <label for="nombre">Nombre</label>
         <input type="text" name="nombre" id="nombre" required />
-
-        <input
-          type="text"
-          name="usuario_id"
-          id="usuario_id"
-          value="<%= usuario %>"
-          disabled
-          style="display: none"
-        />
-
+      
+  
         <label for="matricula">Matricula</label>
         <input type="matricula" name="matricula" required />
 
@@ -33,11 +28,10 @@
 
         <div class="btn-registro">
           <button type="submit" value="save">
-            <a >Finalizar</a>
+            Finalizar
           </button>
         </div>
       </form>
-      <h2>Token: <%= token %></h2>
     </div>
 
     <script src="resources/js/main.js"></script>
