@@ -2,6 +2,8 @@ var models = require("../models");
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 var { promisify } = require("util");
+const logger = require("../utils/logger");
+
 require("dotenv").config();
 
 const findUsuario = (id, { onSuccess, onNotFound, onError }) => {
@@ -69,13 +71,12 @@ exports.crearUsuario = async (req, res) => {
 
     const passHash = await bcrypt.hash(pass, 8);
 
-   await models.usuario
+    await models.usuario
       .create({
         username: user,
         password: passHash,
       })
       .then((usuario) => {
-        
         let token = jwt.sign(
           { id: usuario.id, user: user },
           process.env.JWT_SECRET_KEY,
@@ -91,6 +92,7 @@ exports.crearUsuario = async (req, res) => {
           ),
           httpOnly: true,
         };
+        logger.info("Usuario registrado");
         res.cookie("jwt", token, cookiesOptions);
         res.header("Authorization", `Bearer ${token}`);
         res.status(201).render("perfil", {
@@ -120,7 +122,10 @@ exports.modificarUsuario = (req, res) => {
   const onSuccess = (usuario) =>
     usuario
       .update({ nombre: req.body.nombre }, { fields: ["username", "password"] })
-      .then(() => res.sendStatus(200))
+      .then(() => {
+        logger.info("Usuario editado");
+        res.sendStatus(200);
+      })
       .catch((error) => {
         if (error == "SequelizeUniqueConstraintError: Validation error") {
           res
@@ -144,7 +149,7 @@ exports.eliminarUsuario = (req, res) => {
   const onSuccess = (usuario) =>
     usuario
       .destroy()
-      .then(() => res.sendStatus(200))
+      .then(() =>{    logger.info('Usuario eliminado'); res.sendStatus(200)})
       .catch(() => res.sendStatus(500));
   findUsuario(req.params.id, {
     onSuccess,
@@ -156,34 +161,33 @@ exports.eliminarUsuario = (req, res) => {
 exports.obtenerPorUsername = (req, res) => {
   const { username } = req.query;
 
-models.usuario
-.findOne({
-  attributes: ["username"],
-  include: [
-    {
-      model: models.alumno,
-      attributes: ["id", "nombre", "matricula", "carrera_id"],
+  models.usuario
+    .findOne({
+      attributes: ["username"],
       include: [
         {
-          model: models.carrera,
-          attributes: ["nombre"],
-        },
-        {
-          model: models.alumnoMateria,
-          attributes: ["alumno_id", "materia_id"],
+          model: models.alumno,
+          attributes: ["id", "nombre", "matricula", "carrera_id"],
           include: [
             {
-              model: models.materia,
+              model: models.carrera,
               attributes: ["nombre"],
+            },
+            {
+              model: models.alumnoMateria,
+              attributes: ["alumno_id", "materia_id"],
+              include: [
+                {
+                  model: models.materia,
+                  attributes: ["nombre"],
+                },
+              ],
             },
           ],
         },
       ],
-    },
-  ],
-  where: { username },
-})
+      where: { username },
+    })
     .then((usuario) => (usuario ? res.send(usuario) : res.sendStatus(404)))
     .catch(() => res.sendStatus(500));
 };
-
