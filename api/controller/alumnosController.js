@@ -10,6 +10,21 @@ const findAlumno = (id, { onSuccess, onNotFound, onError }) => {
           model: models.carrera,
           attributes: ["nombre"],
         },
+        {
+          model: models.usuario,
+          attributes: ["username"],
+        },
+        {
+          model: models.alumnoMateria,
+          attributes: ["alumno_id", "materia_id"],
+          include: [
+           
+            {
+              model: models.materia,
+              attributes: ["nombre"],
+            },
+          ],
+        } 
       ],
       where: { id },
     })

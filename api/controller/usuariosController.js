@@ -8,6 +8,28 @@ const findUsuario = (id, { onSuccess, onNotFound, onError }) => {
   models.usuario
     .findOne({
       attributes: ["username"],
+      include: [
+        {
+          model: models.alumno,
+          attributes: ["id", "nombre", "matricula", "carrera_id"],
+          include: [
+            {
+              model: models.carrera,
+              attributes: ["nombre"],
+            },
+            {
+              model: models.alumnoMateria,
+              attributes: ["alumno_id", "materia_id"],
+              include: [
+                {
+                  model: models.materia,
+                  attributes: ["nombre"],
+                },
+              ],
+            },
+          ],
+        },
+      ],
       where: { id },
     })
     .then((usuario) => (usuario ? onSuccess(usuario) : onNotFound()))
@@ -34,6 +56,17 @@ exports.obtenerUsuarioPorId = (req, res) => {
 exports.crearUsuario = async (req, res) => {
   try {
     const { user, pass } = req.body;
+    const usuarioExistente = await models.usuario.findOne({
+      where: { username: user },
+    });
+
+    if (usuarioExistente) {
+      throw new Error("Ya existe un usuario con ese username");
+    }
+    if (pass.length < 8) {
+      throw new Error("La contraseña debe tener al menos 8 caracteres");
+    }
+
     const passHash = await bcrypt.hash(pass, 8);
 
     models.usuario
@@ -60,19 +93,17 @@ exports.crearUsuario = async (req, res) => {
         };
         res.cookie("jwt", token, cookiesOptions);
         res.header("Authorization", `Bearer ${token}`);
-        res
-          .status(201)
-          .render("perfil", {
-            usuario: JSON.stringify(usuario.id),
-            user: JSON.stringify(user),
-            token: JSON.stringify(token),
-          });
+        res.status(201).render("perfil", {
+          usuario: JSON.stringify(usuario.id),
+          user: JSON.stringify(user),
+          token: JSON.stringify(token),
+        });
       })
       .catch((error) => {
         if (error == "SequelizeUniqueConstraintError: Validation error") {
           res
             .status(400)
-            .send("Bad request: existe otra carrera con el mismo nombre");
+            .send("Bad request: existe otro usuario con el mismo username");
         } else {
           console.log(
             `Error al intentar insertar en la base de datos: ${error}`

@@ -1,7 +1,11 @@
 "use strict";
 module.exports = (sequelize, DataTypes) => {
   const carrera = sequelize.define("carrera", {
-    nombre: DataTypes.STRING,
+    nombre: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
   });
   carrera.associate = (models) => {
     carrera.hasMany(models.materia, {

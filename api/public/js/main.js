@@ -28,17 +28,3 @@ const logout = () => {
 };
 
 
-fetch("http://localhost:3001/alu/1")
-  .then((response) => {
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw new Error("Error en la solicitud ");
-    }
-  })
-  .then((data) => {
-   console.log(data,'alumno')
-  })
-  .catch((error) => {
-    console.error(error);
-  });

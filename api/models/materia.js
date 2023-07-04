@@ -1,7 +1,11 @@
 "use strict";
 module.exports = (sequelize, DataTypes) => {
   const materia = sequelize.define("materia", {
-    nombre: DataTypes.STRING,
+    nombre:  {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
   });
   materia.associate = (models) => {
     materia.belongsTo(models.profesorMateria, {

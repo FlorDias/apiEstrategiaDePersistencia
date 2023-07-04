@@ -37,4 +37,69 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const alumnoMateria = await models.alumnoMateria.findOne({
+      attributes: ["id", "alumno_id", "materia_id"],
+      where: { id },
+      include: [
+        {
+          model: models.materia,
+          attributes: ["nombre"],
+        },
+      ],
+    });
+    if (alumnoMateria) {
+      res.send(alumnoMateria);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (error) {
+    console.error("Error al obtener alumnoMateria por ID", error);
+    res.sendStatus(500);
+  }
+});
+
+
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { alumno_id, materia_id } = req.body;
+  try {
+    const alumnoMateria = await models.alumnoMateria.findOne({
+      where: { id },
+    });
+    if (alumnoMateria) {
+      await alumnoMateria.update({
+        alumno_id: Number(alumno_id),
+        materia_id: Number(materia_id),
+      });
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (error) {
+    console.error("Error al editar alumnoMateria por ID", error);
+    res.sendStatus(500);
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const alumnoMateria = await models.alumnoMateria.findOne({
+      where: { id },
+    });
+    if (alumnoMateria) {
+      await alumnoMateria.destroy();
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (error) {
+    console.error("Error al eliminar alumnoMateria por ID", error);
+    res.sendStatus(500);
+  }
+});
+
 module.exports = router;
