@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="resources/img/unahur.ico">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="resources/img/unahur.ico" />
     <title>Inicio</title>
     <link rel="stylesheet" href="resources/css/style.css" />
-</head>
-<body class="content-principal">
+  </head>
+  <body class="content-principal">
     <header>
-        <nav>
-            <div>
-                <img src="resources/img/logo.svg" alt="logo unahur" />
-            </div>
-            <button onclick="logout()">Logout</button>
-        </nav>
+      <nav>
+        <div>
+          <img src="resources/img/logo.svg" alt="logo unahur" />
+        </div>
+        <button onclick="logout()">Logout</button>
+      </nav>
     </header>
     <h1 class="h1-inicio">Bienvenido Alumno</h1>
-
- <!--    <div class="contenedor-inicio">
+    <h1 id="username"><%= usuario.username %></h1>
+    
+    
+    <!--    <div class="contenedor-inicio">
         <div class="tabla">
             <div class="fila">
               <div class="celda impar">Usuario:</div>
@@ -49,5 +51,5 @@
 </div>
     </div> -->
     <script src="resources/js/main.js"></script>
-</body>
+  </body>
 </html>

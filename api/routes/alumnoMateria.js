@@ -50,17 +50,12 @@ router.get("/:id", async (req, res) => {
         },
       ],
     });
-    if (alumnoMateria) {
-      res.send(alumnoMateria);
-    } else {
-      res.sendStatus(404);
-    }
+    alumnoMateria ? res.send(alumnoMateria) : res.sendStatus(404);
   } catch (error) {
     console.error("Error al obtener alumnoMateria por ID", error);
     res.sendStatus(500);
   }
 });
-
 
 router.put("/:id", async (req, res) => {
   const { id } = req.params;

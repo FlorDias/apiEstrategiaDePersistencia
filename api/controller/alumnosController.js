@@ -126,24 +126,6 @@ exports.crearAlumno = async (req, res) => {
     });
 };
 
-/* exports.crearAlumno = async (req, res) => {
-  try {
-    const { nombre, matricula, carrera_id, usuario_id } = req.body;
-    console.log(nombre, matricula, carrera_id, usuario_id);
-    const alumno = await models.alumno.create({
-      nombre,
-      matricula,
-      carrera_id,
-      usuario_id,
-    });
-
-    res.status(201).json({ alumno });
-  } catch (error) {
-    console.log(`Error al intentar insertar en la base de datos: ${error}`);
-    res.status(500).json({ error: "Error interno del servidor" });
-  }
-};
- */
 exports.modificarPorId = (req, res) => {
   const onSuccess = (alumno) =>
     alumno

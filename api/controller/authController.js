@@ -6,7 +6,7 @@ var models = require("../models");
 
 exports.login = async (req, res) => {
   const { user, pass } = req.body;
-  console.log(user, "login", pass);
+
 
   try {
     const usuario = await models.usuario.findOne({
@@ -18,7 +18,7 @@ exports.login = async (req, res) => {
     }
 
     if (bcrypt.compareSync(pass, usuario.password)) {
-   console.log('el usuario y password son correctos')
+  
       const token = jwt.sign({ user: usuario }, process.env.JWT_SECRET_KEY, {
         expiresIn: process.env.JWT_TIEMPO_EXPIRA,
       });
@@ -33,7 +33,7 @@ exports.login = async (req, res) => {
       res.header("Authorization", `Bearer ${token}`);
       res.cookie("jwt", token, cookiesOptions);
 
-      res.status(200).redirect("http://localhost:3001/");
+      res.status(200).render("index",{usuario});
     } else {
       res.status(401).json({ message: "Incorrect password" });
     }

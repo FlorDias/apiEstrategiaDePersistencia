@@ -69,13 +69,13 @@ exports.crearUsuario = async (req, res) => {
 
     const passHash = await bcrypt.hash(pass, 8);
 
-    models.usuario
+   await models.usuario
       .create({
         username: user,
         password: passHash,
       })
       .then((usuario) => {
-        // CREAMOS EL TOKEN
+        
         let token = jwt.sign(
           { id: usuario.id, user: user },
           process.env.JWT_SECRET_KEY,
@@ -152,3 +152,38 @@ exports.eliminarUsuario = (req, res) => {
     onError: () => res.sendStatus(500),
   });
 };
+
+exports.obtenerPorUsername = (req, res) => {
+  const { username } = req.query;
+
+models.usuario
+.findOne({
+  attributes: ["username"],
+  include: [
+    {
+      model: models.alumno,
+      attributes: ["id", "nombre", "matricula", "carrera_id"],
+      include: [
+        {
+          model: models.carrera,
+          attributes: ["nombre"],
+        },
+        {
+          model: models.alumnoMateria,
+          attributes: ["alumno_id", "materia_id"],
+          include: [
+            {
+              model: models.materia,
+              attributes: ["nombre"],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  where: { username },
+})
+    .then((usuario) => (usuario ? res.send(usuario) : res.sendStatus(404)))
+    .catch(() => res.sendStatus(500));
+};
+

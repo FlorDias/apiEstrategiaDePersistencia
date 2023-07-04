@@ -28,3 +28,16 @@ const logout = () => {
 };
 
 
+document.addEventListener("DOMContentLoaded", () => {
+
+  const username = document.getElementById("username")?.innerText;
+
+ 
+  fetch(`http://localhost:3001/usu?username=${username}`)
+    .then(response => response.json())
+    .then(data => {
+    console.log(data)
+ 
+    })
+    .catch(error => console.error("Error al obtener los usuarios:", error));
+});
