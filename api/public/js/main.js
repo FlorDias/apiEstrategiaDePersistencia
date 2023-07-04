@@ -5,7 +5,7 @@ fetch("http://localhost:3001/car")
     if (response.ok) {
       return response.json();
     } else {
-      throw new Error("Error en la solicitud AJAX");
+      throw new Error("Error en la solicitud");
     }
   })
   .then((data) => {
@@ -26,3 +26,19 @@ const logout = () => {
     console.log(data);
   });
 };
+
+
+fetch("http://localhost:3001/alu/1")
+  .then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error("Error en la solicitud ");
+    }
+  })
+  .then((data) => {
+   console.log(data,'alumno')
+  })
+  .catch((error) => {
+    console.error(error);
+  });

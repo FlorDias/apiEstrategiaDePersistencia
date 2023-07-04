@@ -18,7 +18,7 @@ exports.login = async (req, res) => {
     }
 
     if (bcrypt.compareSync(pass, usuario.password)) {
-   
+   console.log('el usuario y password son correctos')
       const token = jwt.sign({ user: usuario }, process.env.JWT_SECRET_KEY, {
         expiresIn: process.env.JWT_TIEMPO_EXPIRA,
       });

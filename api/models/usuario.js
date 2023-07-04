@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
   });
   usuario.associate = (models) => {
-    usuario.belongsTo(models.alumno, {
+    usuario.hasOne(models.alumno, {
       foreignKey: "usuario_id",
     });
   };
