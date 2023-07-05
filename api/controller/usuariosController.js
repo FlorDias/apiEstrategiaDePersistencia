@@ -119,30 +119,25 @@ exports.crearUsuario = async (req, res) => {
 };
 
 exports.modificarUsuario = (req, res) => {
-  const onSuccess = (usuario) =>
-    usuario
-      .update({ nombre: req.body.nombre }, { fields: ["username", "password"] })
-      .then(() => {
-        logger.info("Usuario editado");
-        res.sendStatus(200);
-      })
-      .catch((error) => {
-        if (error == "SequelizeUniqueConstraintError: Validation error") {
-          res
-            .status(400)
-            .send("Bad request: existe otra carrera con el mismo nombre");
-        } else {
-          console.log(
-            `Error al intentar actualizar la base de datos: ${error}`
-          );
-          res.sendStatus(500);
-        }
-      });
-  findUsuario(req.params.id, {
-    onSuccess,
-    onNotFound: () => res.sendStatus(404),
-    onError: () => res.sendStatus(500),
-  });
+  const { id } = req.params;
+  const {  username } = req.body;
+
+  models.usuario.findByPk(id)
+    .then((usuario) => {
+      if (!usuario) {
+        return res.status(404).send("Usuario no encontrado");
+      }
+      usuario.username = username;
+      return usuario.save();
+    })
+    .then(() => {
+      logger.info("Usuario editado");
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.error("Error al intentar actualizar el usuario:", error);
+      res.sendStatus(500);
+    });
 };
 
 exports.eliminarUsuario = (req, res) => {
