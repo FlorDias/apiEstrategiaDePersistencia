@@ -1,16 +1,16 @@
 var express = require("express");
 var router = express.Router();
-var models = require("../models");
 var materiasController = require("../controller/materiasController");
+var { cacheInit } = require('../middleware/cache');
 
-router.get("/", materiasController.obtenerMaterias);
+router.get("/",cacheInit.withTtl('1 hour'), materiasController.obtenerMaterias);
 
-router.post("/", materiasController.crearMateria);
+router.post("/",cacheInit.withTtl('1 hour'), materiasController.crearMateria);
 
-router.get("/:id", materiasController.obtenerMateriaPorId);
+router.get("/:id",cacheInit.withTtl('1 hour'), materiasController.obtenerMateriaPorId);
 
-router.put("/:id", materiasController.modificarMateria);
+router.put("/:id",cacheInit.withTtl('1 hour'), materiasController.modificarMateria);
 
-router.delete("/:id", materiasController.eliminarMateria);
+router.delete("/:id",cacheInit.withTtl('1 hour'), materiasController.eliminarMateria);
 
 module.exports = router;
