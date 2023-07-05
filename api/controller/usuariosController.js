@@ -140,18 +140,28 @@ exports.modificarUsuario = (req, res) => {
     });
 };
 
+
 exports.eliminarUsuario = (req, res) => {
-  const onSuccess = (usuario) =>
-    usuario
-      .destroy()
-      .then(() =>{    logger.info('Usuario eliminado'); res.sendStatus(200)})
-      .catch(() => res.sendStatus(500));
-  findUsuario(req.params.id, {
-    onSuccess,
-    onNotFound: () => res.sendStatus(404),
-    onError: () => res.sendStatus(500),
-  });
+  const { id } = req.params;
+
+  models.usuario.findByPk(id)
+    .then((usuario) => {
+      if (!usuario) {
+        return res.sendStatus(404);
+      }
+
+      return usuario.destroy();
+    })
+    .then(() => {
+      logger.info('Usuario eliminado');
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.error('Error al intentar eliminar el usuario:', error);
+      res.sendStatus(500);
+    });
 };
+
 
 exports.obtenerPorUsername = (req, res) => {
   const { username } = req.query;
