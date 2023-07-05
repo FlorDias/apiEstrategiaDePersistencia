@@ -1,7 +1,7 @@
 var models = require("../models");
 
-exports.obtenerProfesores = async (req, res) => {
-  await models.profesorMateria
+exports.obtenerProfesores = (_req, res) => {
+  models.profesorMateria
     .findAll({
       attributes: ["id", "profesor_id", "materia_id"],
     })
@@ -9,36 +9,32 @@ exports.obtenerProfesores = async (req, res) => {
     .catch(() => res.sendStatus(500));
 };
 
-exports.crearProfesor = async (req, res) => {
+exports.crearProfesorMateria = async (req, res) => {
   try {
-    const { profesorId, materiaId } = req.body; 
+    const { profesor_id, materia_id } = req.body;
     const nuevaProfesorMateria = await models.profesorMateria.create({
-      profesor_id: profesorId,
-      materia_id: materiaId,
+      profesor_id: Number(profesor_id),
+      materia_id: Number(materia_id),
     });
-
     res.status(201).json({
-      mensaje: "ProfesorMateria creada exitosamente",
+      mensaje: "ProfesorMateria creado exitosamente",
       profesorMateria: nuevaProfesorMateria,
     });
   } catch (error) {
-    console.error("Error al crear la profesorMateria", error);
-    res.status(500).json({ mensaje: "Error al crear la profesorMateria" });
+    console.error("Error al crear profesorMateria", error);
+    res.status(500).json({ mensaje: "Error al crear profesorMateria" });
   }
 };
+
 exports.obtenerProfesorMateriaPorId = async (req, res) => {
   try {
-    const profesorMateriaId = req.params.id;
+    const id = req.params.id;
 
-    const profesorMateria = await models.profesorMateria.findByPk(
-      profesorMateriaId
-    );
+    const profesorMateria = await models.profesorMateria.findOne({ id: id });
 
-    if (profesorMateria) {
-      res.json(profesorMateria);
-    } else {
-      res.status(404).json({ mensaje: "ProfesorMateria no encontrado" });
-    }
+    profesorMateria
+      ? res.json(profesorMateria)
+      : res.status(404).json({ mensaje: "ProfesorMateria no encontrado" });
   } catch (error) {
     console.error("Error al obtener profesorMateria", error);
     res.status(500).json({ mensaje: "Error al obtener profesorMateria" });
@@ -47,13 +43,11 @@ exports.obtenerProfesorMateriaPorId = async (req, res) => {
 
 exports.eliminarProfesorMateriaPorId = async (req, res) => {
   try {
-    const profesorMateriaId = req.params.id; 
+    const id = req.params.id;
+    const profesorMateria = await models.profesorMateria.findOne({ id: id });
 
-    const filasEliminadas = await models.profesorMateria.destroy({
-      where: { id: profesorMateriaId },
-    });
-
-    if (filasEliminadas > 0) {
+    if (profesorMateria) {
+      await profesorMateria.destroy();
       res.json({ mensaje: "ProfesorMateria eliminado exitosamente" });
     } else {
       res.status(404).json({ mensaje: "ProfesorMateria no encontrado" });
@@ -66,27 +60,26 @@ exports.eliminarProfesorMateriaPorId = async (req, res) => {
 
 exports.modificarProfesorMateriaPorId = async (req, res) => {
   try {
-    const profesorMateriaId = req.params.id;
-    const { profesorId, materiaId } = req.body;
-    const profesorMateria = await models.profesorMateria.findByPk(
-      profesorMateriaId
-    );
+    const id = req.params.id;
+    const { profesor_id, materia_id } = req.body;
+
+    const profesorMateria = await models.profesorMateria.findOne({ id: id });
 
     if (profesorMateria) {
-      profesorMateria.profesor_id = profesorId;
-      profesorMateria.materia_id = materiaId;
+      profesorMateria.profesor_id = profesor_id;
+      profesorMateria.materia_id = materia_id;
 
       await profesorMateria.save();
 
       res.json({
-        mensaje: "ProfesorMateria modificado exitosamente",
+        mensaje: "ProfesorMateria actualizado exitosamente",
         profesorMateria: profesorMateria,
       });
     } else {
       res.status(404).json({ mensaje: "ProfesorMateria no encontrado" });
     }
   } catch (error) {
-    console.error("Error al modificar profesorMateria", error);
-    res.status(500).json({ mensaje: "Error al modificar  profesorMateria" });
+    console.error("Error al editar profesorMateria", error);
+    res.status(500).json({ mensaje: "Error al editar profesorMateria" });
   }
 };

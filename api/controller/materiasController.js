@@ -6,12 +6,7 @@ const findMateria = (id, { onSuccess, onNotFound, onError }) => {
 
   models.materia
     .findOne({
-      attributes: ["id", "nombre", "carrera_id"],
-       include: [
-        { 
-           model: models.carrera,
-        attributes: ["nombre"],
-        },], 
+      attributes: ["id", "nombre", "carrera_id"], 
       where: { id },
     })
     .then((materias) => (materias ? onSuccess(materias) : onNotFound()))
@@ -21,11 +16,7 @@ const findMateria = (id, { onSuccess, onNotFound, onError }) => {
 exports.obtenerMaterias = (req, res) => {
   models.materia
     .findAll({
-      attributes: ["id", "nombre", "carrera_id"],
-      include: [{
-        model: models.carrera,
-        attributes: ["nombre"],
-      }],
+      attributes: ["id", "nombre", "carrera_id"]
     })
     .then((materias) => res.send(materias))
     .catch(() => res.sendStatus(500));
