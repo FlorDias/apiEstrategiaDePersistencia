@@ -21,7 +21,7 @@ exports.obtenerCarreras =  (req, res) => {
       .findAndCountAll({
         attributes: ["id", "nombre"],
         order: [["id", "ASC"]],
-        limit: 5
+        limit: 3
       })
       .then(carreras => {
         res.send(carreras)
