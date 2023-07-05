@@ -6,7 +6,7 @@ exports.obtenerAlumonoMateria = async (req, res) => {
       .findAll({
         attributes: ["id", "alumno_id", "materia_id"],
       })
-      .then((profesores) => res.send(profesores))
+      .then((alumnoMateria) => res.send(alumnoMateria))
       .catch(() => res.sendStatus(500));
   } catch (error) {
     console.log(error);
@@ -26,8 +26,8 @@ exports.crearAlumnoMateria = async (req, res) => {
       alumnoMateria: nuevoAlumnoMateria,
     });
   } catch (error) {
-    console.error("Error al crear la profesorMateria", error);
-    res.status(500).json({ mensaje: "Error al crear la profesorMateria" });
+    console.error("Error al crear profesorMateria", error);
+    res.status(500).json({ mensaje: "Error al crear profesorMateria" });
   }
 };
 

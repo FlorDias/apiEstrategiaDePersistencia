@@ -87,13 +87,13 @@ exports.crearAlumno = async (req, res) => {
   let token = req.cookies.jwt;
   let user_id;
 
-  if (authorization && authorization.toLowerCase().startsWith("bearer")) {
+  if (authorization && authorization.toLowerCase().startsWith("bearer")) { 
     token = authorization.substring(7);
   }
 
   let decodedToken;
   try {
-    decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY); // decodifica el token
     user_id = decodedToken?.id;
   } catch (error) {
     console.log(error);
